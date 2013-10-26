@@ -13,6 +13,7 @@ type Builder interface {
 	Password(string)
 	Dbname(string)
 	Build() string
+	Set(string, string)
 }
 
 type connectionData struct {
@@ -21,6 +22,14 @@ type connectionData struct {
 	username string
 	password string
 	dbname   string
+	params   map[string]string
+}
+
+func (self *connectionData) Set(name string, value string){
+	if self.params == nil{
+		self.params = make(map[string]string)
+	}
+	self.params[name] = value
 }
 
 func (self *connectionData) Port(port uint16) {
